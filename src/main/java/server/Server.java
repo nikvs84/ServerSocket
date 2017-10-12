@@ -56,8 +56,23 @@ public class Server {
         }
 
         @Override
+        public synchronized void start() {
+            handShake();
+            super.start();
+        }
+
+        @Override
         public void run() {
 //            messageProcessing();
+            try {
+                readInputHeaders();
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
+
+        }
+
+        private void handShake() {
             try {
                 readInputHeaders();
                 System.out.println("\n=====================================\n");
