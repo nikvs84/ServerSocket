@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket</title>
+    <script language="JavaScript">
+        var socket = new WebSocket("ws://127.0.0.1:12345");
+        socket.onopen = function() {
+            alert("Соединение установлено.");
+        };
+
+        socket.onclose = function(event) {
+            if (event.wasClean) {
+                alert('Соединение закрыто чисто');
+            } else {
+                alert('Обрыв соединения'); // например, "убит" процесс сервера
+            }
+            alert('Код: ' + event.code + ' причина: ' + event.reason);
+        };
+
+        socket.onmessage = function(event) {
+            alert("Получены данные " + event.data);
+        };
+
+        socket.onerror = function(error) {
+            alert("Ошибка " + error.message);
+        };
+
+        function onClick() {
+            socket.send('Hello!');
+        }
+    </script>
+</head>
+<body>
+    <button onclick="onClick()" title="send" >send</button>
+</body>
+</html>
